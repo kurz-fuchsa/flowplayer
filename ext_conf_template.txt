@@ -1,0 +1,17 @@
+# cat=General//30; type=string; label = Base url for the API
+baseUrl = https://api.flowplayer.com/platform/v3/
+
+# cat=General//140; type=string; label = The two-letter language code (ISO 639-1) to be used for parsing the query string and also for the metadata field values to be returned.
+locale = de
+
+# cat=Proxy//50; type=boolean; label = Use HTTP Proxy Server
+useProxy =
+
+# cat=Proxy//70; type=string; label = Proxy URL
+proxyUrl =
+
+# cat=Proxy//80; type=string; label = Proxy Port
+proxyPort = 8080
+
+
+

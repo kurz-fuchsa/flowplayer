@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<T3DataStructure>
+  <meta>
+    <langDisable>1</langDisable>
+  </meta>
+  <ROOT>
+    <type>array</type>
+    <el>
+      <basePath>
+        <TCEforms>
+          <label>LLL:EXT:lang/locallang_mod_file_list.xlf:localDriverFlexform_basePath</label>
+          <config>
+            <type>input</type>
+            <default>uploads/tx_kurzflowplayer/</default>
+            <size>30</size>
+          </config>
+        </TCEforms>
+      </basePath>
+      <pathType>
+        <TCEforms>
+          <label>LLL:EXT:lang/locallang_mod_file_list.xlf:localDriverFlexform_pathType</label>
+          <config>
+            <type>radio</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:lang/locallang_mod_file_list.xlf:localDriverFlexform_pathType_relative
+                </numIndex>
+                <numIndex index="1">relative</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:lang/locallang_mod_file_list.xlf:localDriverFlexform_pathType_absolute
+                </numIndex>
+                <numIndex index="1">absolute</numIndex>
+              </numIndex>
+            </items>
+            <default>relative</default>
+          </config>
+        </TCEforms>
+      </pathType>
+      <apiBaseURL>
+        <TCEforms>
+          <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:apiBaseURL</label>
+          <config>
+            <type>input</type>
+            <default>https://api.flowplayer.com/platform/v3/</default>
+            <size>30</size>
+          </config>
+        </TCEforms>
+      </apiBaseURL>
+      <apiKey>
+        <TCEforms>
+          <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:apiKey</label>
+          <config>
+            <type>input</type>
+            <size>30</size>
+          </config>
+        </TCEforms>
+      </apiKey>
+      <defaultlanguage>
+        <TCEforms>
+          <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:defaultlanguage</label>
+          <config>
+            <type>input</type>
+            <default>de</default>
+            <size>2</size>
+          </config>
+        </TCEforms>
+      </defaultlanguage>
+      <maxSizePreviewImage>
+        <TCEforms>
+          <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:maxSizePreviewImage</label>
+          <config>
+            <type>input</type>
+            <default>400</default>
+            <size>6</size>
+          </config>
+        </TCEforms>
+      </maxSizePreviewImage>
+      <maxSizeViewImage>
+        <TCEforms>
+          <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:maxSizeViewImage</label>
+          <config>
+            <type>input</type>
+            <default>400</default>
+            <size>6</size>
+          </config>
+        </TCEforms>
+      </maxSizeViewImage>
+    </el>
+  </ROOT>
+</T3DataStructure>

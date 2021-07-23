@@ -1,0 +1,32 @@
+{
+    "name": "kurz/kurz-flowplayer",
+    "type": "typo3-cms-extension",
+    "description": "Provides an extended local driver for the TYPO3 File Abstraction Layer (FAL) with the possibility to use the flowplayer API.",
+    "authors": [
+        {
+            "name": "Alexander Fuchs",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.7.1"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "KURZ\\KurzFlowplayer\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KURZ\\KurzFlowplayer\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "kurz_flowplayer": "self.version",
+        "typo3-ter/kurz-flowplayer": "self.version"
+    }
+}

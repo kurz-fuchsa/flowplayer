@@ -1,0 +1,42 @@
+<html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="content">
+<h1>Listing for Workspace</h1>
+
+<f:flashMessages />
+
+<table  class="tx_kurzflowplayer" >
+	<tr>
+		<th><f:translate key="tx_kurzflowplayer_domain_model_workspace.site_id" /></th>
+		<th><f:translate key="tx_kurzflowplayer_domain_model_workspace.name" /></th>
+		<th><f:translate key="tx_kurzflowplayer_domain_model_workspace.api_key" /></th>
+		<th> </th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{workspaces}" as="workspace">
+		<tr>
+			<td><f:link.action action="show" arguments="{workspace : workspace}"> {workspace.siteId}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{workspace : workspace}"> {workspace.name}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{workspace : workspace}"> {workspace.apiKey}</f:link.action></td>
+			<td><f:link.action action="edit" arguments="{workspace : workspace}">Edit</f:link.action></td>
+			<td><f:link.action action="delete" arguments="{workspace : workspace}">Delete</f:link.action></td>
+		</tr>
+		</f:for>
+</table>
+
+<f:link.action action="new">New Workspace</f:link.action>
+	</f:section>
+</html>

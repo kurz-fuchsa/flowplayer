@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-07-13T14:22:53Z" product-name="kurz_flowplayer">
+		<header/>
+		<body>
+			<trans-unit id="tx_kurzflowplayer_domain_model_administration">
+				<source>Administration</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer.config.rootpath">
+				<source>Absolute path to the root of the local filesystem</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer.config.logfilename">
+				<source>Absolute path of a file to store log messages.\nAll function calls are logged with their parameters in the log file.</source>
+			</trans-unit>
+			<trans-unit id="apiBaseURL" xml:space="preserve">
+				<source>Base url for the API</source>
+			</trans-unit>
+			<trans-unit id="catalogName" xml:space="preserve">
+				<source>Catalog name</source>
+			</trans-unit>
+			<trans-unit id="apiKey" xml:space="preserve">
+				<source>API Key</source>
+			</trans-unit>
+			<trans-unit id="defaultlanguage" xml:space="preserve">
+				<source>Default language in two-letter language code (ISO 639-1)</source>
+			</trans-unit>
+			<trans-unit id="maxSizePreviewImage" xml:space="preserve">
+				<source>Maximum size of the inserted preview image(Backend)</source>
+			</trans-unit>
+			<trans-unit id="maxSizeViewImage" xml:space="preserve">
+            	<source>Maximum size of the image(Frontend)</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace">
+				<source>Workspace</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace.site_id">
+				<source>Site ID</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace.api_key">
+				<source>Api Key</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

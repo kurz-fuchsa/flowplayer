@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-07-19T14:19:35Z" product-name="kurz_flowplayer">
+		<header/>
+		<body>
+			<trans-unit id="tx_kurzflowplayer_domain_model_administration">
+				<source>Administration</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace">
+				<source>Workspace</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace.site_id">
+				<source>Site ID</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_kurzflowplayer_domain_model_workspace.api_key">
+				<source>Api Key</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
