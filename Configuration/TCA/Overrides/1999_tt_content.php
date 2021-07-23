@@ -28,4 +28,4 @@ $GLOBALS['TCA']['tt_content']['types']['media']['columnsOverrides']['assets']['c
             ]
         ]
     ];
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] = 'gif,jpg,jpeg,bmp,png,pdf,svg,ai,mp3,wav,mp4,ogg,flac,opus,webm,youtube,vimeo,flowplayer';
+
