@@ -61,10 +61,21 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
         $response = $this->requestingAPI($file, $videoId);
         $temporaryFileName = $this->getTempFolderPath() . 'flowplayer_' . md5($videoId) . '.jpg';
 
-
         $previewImage = GeneralUtility::getUrl(
             $response->images[0]->url
         );
+
+        if ($images = $response->{JsonParameters::IMAGES}) {
+                    foreach ($images as $image) {
+                        if ($image->type == JsonParameters::IMAGE_TYPE_THUMBNAIL) {
+                            $imageUrl = $image->url;
+                        }
+                    }
+        $request = new HttpRequest($imageUrl, $httpHeader = []);
+        $previewImage = $request->executeRESTCall("GET", null);
+        ///$previewImage = GeneralUtility::getUrl($response->images[0]->url);
+
+        }
         if ($previewImage !== false) {
             file_put_contents($temporaryFileName, $previewImage);
             GeneralUtility::fixPermissions($temporaryFileName);

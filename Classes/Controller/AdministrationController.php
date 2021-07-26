@@ -107,15 +107,15 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             if ($this->request->hasArgument('siteId')) {
                 $siteId = $this->request->getArgument('siteId');
                 $res = $this->workspaceRepository->findOneBySiteId($siteId);
+
                 try{
                     $apiKey = $res->getApiKey();
                 }catch ( Exception $exception ){
                     $exception->getMessage();
                 }
 
-            } else {
-                $apiKey = $this->storageConfiguration['apiKey'];
             }
+
             $apiBaseURL = $this->storageConfiguration['apiBaseURL'];
             ///Endpoint for listing a Video
             $videosUrl = $apiBaseURL . "videos";
@@ -125,20 +125,33 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             ];
 
             $request = new HttpRequest($videosUrl, $httpHeader);
-            $r = $request->executeRESTCall("GET", null);
-            $videos = json_decode($r);
-            $basePath = GeneralUtility::getFileAbsFileName(
-                $this->storageConfiguration['basePath']
-            );
-            if ($videos->total_count > 0) {
-                foreach ($videos->assets as $video) {
-                    if ($video->{JsonParameters::ID}) {
-                        $this->createNewFile($video);
-                    }
-                }
-                $this->view->assign('videos', $videos);
 
+            if($r = $request->executeRESTCall("GET", null)){
+
+                $videos = json_decode($r);
+                $basePath = GeneralUtility::getFileAbsFileName(
+                    $this->storageConfiguration['basePath']
+                );
+                if ($videos->total_count > 0) {
+                    foreach ($videos->assets as $video) {
+                        if ($video->{JsonParameters::ID}) {
+                            $this->createNewFile($video);
+                        }
+                    }
+                    $this->view->assign('videos', $videos);
+
+                }
+            }else{
+                $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+                $this->addFlashMessage(
+                    'Please check your proxy settings in configuration options for this extension.',
+                    'Proxy Setting is ' . $this->extConf['useProxy'],
+                    \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,
+                    TRUE
+                );
             }
+
+
             $this->view->assign('workspaces', $workspaces);
             $this->view->assign('siteId',  $siteId );
         }
@@ -194,7 +207,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             'title' => $video->{JsonParameters::NAME},
             'description' => $video->{JsonParameters::DESCRIPTION},
             'keywords' => $video->{JsonParameters::TAGS},
-            'categories' => $video->{JsonParameters::CATEGORY}->name,
+            //'categories' => $video->{JsonParameters::CATEGORY}->name,
             'duration' => $video->{JsonParameters::DURATION}
             //'width' =>,
             //'height' =>

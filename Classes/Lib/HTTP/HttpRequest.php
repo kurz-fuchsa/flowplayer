@@ -81,11 +81,14 @@ class HttpRequest {
     public function executeRESTCall($methode ,  $daten = false)
     {
 
+        ///The extension configuration stored in $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'] since v 9.0 has been deprecated
+        $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+
         $curl = curl_init();
-        //if ($this->settings['proxy']) {
-            curl_setopt($curl, CURLOPT_PROXY, self::PROXY_URL);
-            curl_setopt($curl, CURLOPT_PROXYPORT, self::PROXY_PORT);
-        //}
+        if ($this->extConf['useProxy']) {
+            curl_setopt($curl, CURLOPT_PROXY, $this->extConf['proxyUrl']);
+            curl_setopt($curl, CURLOPT_PROXYPORT, $this->extConf['proxyPort']);
+        }
         curl_setopt($curl, CURLOPT_TIMEOUT, 50);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_URL, $this->url);

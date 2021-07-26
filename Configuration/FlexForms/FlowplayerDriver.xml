@@ -47,15 +47,6 @@
           </config>
         </TCEforms>
       </apiBaseURL>
-      <apiKey>
-        <TCEforms>
-          <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:apiKey</label>
-          <config>
-            <type>input</type>
-            <size>30</size>
-          </config>
-        </TCEforms>
-      </apiKey>
       <defaultlanguage>
         <TCEforms>
           <label>LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:defaultlanguage</label>
