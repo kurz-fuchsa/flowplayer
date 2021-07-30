@@ -18,9 +18,13 @@
                                        controller="Administration" action="index"
                                        arguments="{siteId: workspace.siteId}" />
 </f:for>
-
+            <f:be.menus.actionMenuItem label="------" controller="Administration"
+                                       action="index"
+            />
             <f:be.menus.actionMenuItem label="Workspaces Overview" action="list" controller="Workspace" />
             <f:be.menus.actionMenuItem label="Create new Workspace" action="new" controller="Workspace" />
+            <f:be.menus.actionMenuItem label="Player Overview" controller="Player" action="list" />
+            <f:be.menus.actionMenuItem label="Create new Player" action="new" controller="Player" />
           </f:be.menus.actionMenu>
 
         </div>

@@ -25,6 +25,8 @@ call_user_func(
 
         }
 
+
+
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('kurz_flowplayer', 'Configuration/TypoScript', 'FAL flowplayer Driver');
 
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_kurzflowplayer_domain_model_administration', 'EXT:kurz_flowplayer/Resources/Private/Language/locallang_csh_tx_kurzflowplayer_domain_model_administration.xlf');

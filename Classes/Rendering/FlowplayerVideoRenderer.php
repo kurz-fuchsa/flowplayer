@@ -90,8 +90,53 @@ class FlowplayerVideoRenderer implements FileRendererInterface
         $filename = explode(".", $file->getProperty('name'));
         $videoId = $filename[0];
         $siteId = $file->getContents();
+        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+        $propertiesOfFileReference = $file->getReferenceProperties();
+        $parameters = '&';
 
-        ///return '<div data-player-id="5c149835-639d-42b4-abb8-ab70a6372e2d"><script src="//cdn.flowplayer.com/players/'.$siteId.'/native/flowplayer.async.js">{"src": "'. $videoId.'"}</script></div>';
+        $attributes = [];
+        if ($propertiesOfFileReference['autoplay']) {
+            $attributes[] = ' allow="autoplay" ';
+            $parameters .='autoplay=true&';
+        }
+        if ($propertiesOfFileReference['muted']) {
+            $attributes[] = 'muted';
+            $parameters .='mute=true&';
+        }
+        if ($propertiesOfFileReference['videoloop']) {
+            $attributes[] = 'videoloop';
+            $parameters .='loop=true&';
+        }
+        if ($propertiesOfFileReference['autopause']) {
+            $attributes[] = 'autopause';
+        }
+        if ($propertiesOfFileReference['width']) {
+            $attributes[] = 'width="' . (int)$propertiesOfFileReference['width'] . '"';
+        }
+        if ($propertiesOfFileReference['height']) {
+            $attributes[] = 'height="' . (int)$propertiesOfFileReference['height'] . '"';
+        }
+       // if ($propertiesOfFileReference['title']) {
+            $attributes[] = 'title="' . $options['title'] . '"';
+       // }
+
+        if ($propertiesOfFileReference['player']) {
+            $player = '//embed.flowplayer.com/api/video/embed.jsp?id='.$videoId.'&pi='.  $propertiesOfFileReference['player'];
+        }else{
+            $player =  '//ljsp.lwcdn.com/api/video/embed.jsp?id='. $videoId;
+        }
+
+        $attributes[] = ' byline="0" portrait="0" frameborder="0" ';
+            ///return '<div data-player-id="5c149835-639d-42b4-abb8-ab70a6372e2d"><script src="//cdn.flowplayer.com/players/'.$siteId.'/native/flowplayer.async.js">{"src": "'. $videoId.'"}</script></div>';
+
+        $iframe =  sprintf('<div %s><iframe %s src="%s" %s></iframe></div>',
+            'class="flowplayer-embed-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;"',
+            'style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" webkitAllowFullScreen mozallowfullscreen allowfullscreen ',
+            $player,
+            empty($attributes) ? '' : ' ' . implode(' ', $attributes)
+        );
+
+        return $iframe;
         $js = '<div class="flowplayer-embed-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;">
 <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" webkitAllowFullScreen mozallowfullscreen allowfullscreen 
 src="//ljsp.lwcdn.com/api/video/embed.jsp?id='. $videoId.'&pi=a29c6a42-b142-42fa-b7be-4e280e8020a5" 

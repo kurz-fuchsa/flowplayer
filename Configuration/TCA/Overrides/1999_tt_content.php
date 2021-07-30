@@ -1,5 +1,18 @@
 <?php
 
+
+
+
+/*###playsinline autoplay muted loop width height
+$GLOBALS['TCA']['sys_file_reference']['palettes']['videoOverlayPalette'] = array_replace_recursive(
+    $GLOBALS['TCA']['sys_file_reference']['palettes']['videoOverlayPalette'],
+    [
+        'showitem' => ' title,description,--linebreak--,autoplay, videoloop, muted, --linebreak--, height,  width'
+    ]
+);*/
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'videoOverlayPalette', 'title, description,--linebreak--,autoplay, videoloop, muted, --linebreak--, height,  width');
+
 $GLOBALS['TCA']['tt_content']['types']['media']['columnsOverrides']['assets']['config'] =
     [
         'filter' => [
@@ -25,7 +38,18 @@ $GLOBALS['TCA']['tt_content']['types']['media']['columnsOverrides']['assets']['c
                         ]
                     ]
                 ]
+            ],
+            'types' =>[
+                \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
+                    'showitem' => '
+                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.videoOverlayPalette;videoOverlayPalette,
+                                    --palette--;;filePalette'
+                ]
             ]
+
         ]
     ];
+
+
+
 
