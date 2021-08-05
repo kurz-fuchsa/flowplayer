@@ -91,7 +91,7 @@ class FlowplayerVideoRenderer implements FileRendererInterface
         $videoId = $filename[0];
         $siteId = $file->getContents();
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
-        $propertiesOfFileReference = $file->getReferenceProperties();
+        $propertiesOfFileReference = $file->getProperties();
         $parameters = '&';
 
         $attributes = [];

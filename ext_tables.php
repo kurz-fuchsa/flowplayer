@@ -13,7 +13,8 @@ call_user_func(
                 '', // Position
                 [
                     'Administration' => 'index', 'importVideos',
-                    'Workspace' => 'list, new, create, edit, update, delete'
+                    'Workspace' => 'list, new, create, edit, update, delete',
+                    'Player' => 'list, new, create, edit, update, delete'
 
                 ],
                 [
