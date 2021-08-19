@@ -1,51 +1,15 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:flashMessages/>
-<f:be.container>
-  <div class="typo3-fullDoc">
-    <div id="typo3-docheader">
-      <div class="typo3-docheader-functions">
+<f:layout name="Default"/>
 
-        <div class="left">
-          <f:be.buttons.csh/>
-          <f:be.menus.actionMenu>
-            <f:be.menus.actionMenuItem label="------" controller="Administration"
-                                       action="index"
-            />
-<f:for each="{workspaces}" as="workspace">
-            <f:be.menus.actionMenuItem label="{workspace.name}"
-                                       controller="Administration" action="index"
-                                       arguments="{siteId: workspace.siteId}" />
-</f:for>
-            <f:be.menus.actionMenuItem label="------" controller="Administration"
-                                       action="index"
-            />
-            <f:be.menus.actionMenuItem label="Workspaces Overview" action="list" controller="Workspace" />
-            <f:be.menus.actionMenuItem label="Create new Workspace" action="new" controller="Workspace" />
-            <f:be.menus.actionMenuItem label="Player Overview" controller="Player" action="list" />
-            <f:be.menus.actionMenuItem label="Create new Player" action="new" controller="Player" />
-          </f:be.menus.actionMenu>
+<f:section name="menu">
+  <f:render partial="Administration/Menu" arguments="{_all}" />
+</f:section>
 
-        </div>
-      </div>
-    </div>
-    <div class="right">
-      <f:be.pagePath/>
-      <f:be.pageInfo/>
-    </div>
-  </div>
-  <div class="typo3-docheader-buttons">
-    <div class="left">
 
-    </div>
-    <div class="right">
-      <f:be.buttons.shortcut/>
-    </div>
-  </div>
+<f:section name="content">
 
-  <div id="typo3-docbody">
-    <div id="typo3-inner-docbody">
       <style>
 
         table tr th {
@@ -54,54 +18,57 @@
           background-color: #a8a19f;
           z-index: 900000;
         }
+
       </style>
+  <h1>
+    <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="30"
+             style="float:left; margin-right: 10px;"/>
+    <f:translate key="title"/>
+  </h1>
+  <f:flashMessages/>
+  <h2>
+    <f:translate key="tx_kurzflowplayer_domain_model_workspace"/> info: Name: {workspace.name}, Site Id: {workspace.siteId}
+  </h2>
 
       <table style="text-align: center; " class="table table-bordered">
         <tr>
-          <th></th>
-          <th class="col-md-1" style="text-align: center">Name</th>
-          <th class="col-md-1" style="text-align: center">Description</th>
-          <th class="col-md-1" style="text-align: center">Tags</th>
-          <th class="col-md-1" style="text-align: center">Vorschaubild</th>
-          <th></th>
+          <th class="col-md-1" style="text-align: left; "><f:translate key="number"/></th>
+          <th class="col-md-1"><f:translate key="video_id"/></th>
+          <th class="col-md-1"></th>
+          <th class="col-md-3" style="text-align: center"><f:translate key="video_title"/></th>
+          <th class="col-md-3" style="text-align: center"><f:translate key="video_description"/></th>
+          <th class="col-md-1" style="text-align: center"><f:translate key="video_tags"/></th>
+          <th class="col-md-1" style="text-align: center"><f:translate key="thumbnail"/></th>
+          <th class="col-md-1" style="text-align: center"><f:translate key="video"/></th>
         </tr>
 
-        <f:for each="{videos.assets}" as="video">
-          <tr>
-            <td class="col-md-1">
-              <f:form action="importVideos">
-                <f:form.button name="videoId" value="{video.id}">
-                  <f:if condition="{user.deleted}">
-                    <f:then>
-                      <f:translate key="module_import.action.undelete"/>
-                    </f:then>
-                    <f:else>
-                      <f:if condition="{video.uid}">
-                        <f:then>
-                          Update
-                        </f:then>
-                        <f:else>
-                          Import
-                        </f:else>
-                      </f:if>
-                    </f:else>
-                  </f:if>
-                </f:form.button>
-              </f:form>
+        <f:for each="{videos.assets}" as="video" iteration="iterator">
+          <tr class="{f:if(condition:video.isInFalExist,then:'success')}">
+            <td>{iterator.cycle}</td>
+            <td>{video.id}</td>
+            <td>
+              <f:if condition="{video.isInFalExist}">
+                <f:then>
+                  <f:link.action class="btn btn-default" action="index" controller="Administration" arguments="{asset : video.id, siteId: video.workspace.id, method: 'update'}">Update</f:link.action>
+                </f:then>
+                <f:else>
+                  <f:link.action class="btn btn-default" action="index" controller="Administration" arguments="{asset : video.id, siteId: video.workspace.id, method: 'import'}">Import</f:link.action>
+                </f:else>
+
+              </f:if>
             </td>
-            <td class="col-md-1">{video.name}
+            <td>{video.name}
             </td>
-            <td class="col-md-1">{video.description}</td>
+            <td>{video.description}</td>
             <td>{video.tags}
             </td>
-            <td class="col-md-1"><img src="{video.images.0.url}" width="320"/></td>
-            <td class="col-md-1">
+            <td><img src="{video.images.0.url}"  width="100%"/></td>
+            <td>
               <div class="flowplayer-embed-container"
-                   style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;">
-                <iframe style="position: absolute; top: 0; left: 0; width: 320px; height: 150px;"
+                   style="position: relative; padding-bottom: 50%; height: 0; overflow: hidden; width:100%;">
+                <iframe style="position: absolute; top: 0; left: 0; width: 200px; height: 100px;"
                         webkitAllowFullScreen mozallowfullscreen
-                        allowfullscreen
-                        src="//ljsp.lwcdn.com/api/video/embed.jsp?id={video.id}&pi=a29c6a42-b142-42fa-b7be-4e280e8020a5"
+                        allowfullscreen src="//ljsp.lwcdn.com/api/video/embed.jsp?id={video.id}"
                         title="0" byline="0" portrait="0" frameborder="0" allow="autoplay">
                 </iframe>
               </div>
@@ -114,8 +81,7 @@
           <td colspan="12" height="20"></td>
         </tr>
       </table>
-    </div>
-  </div>
 
-</f:be.container>
+
+</f:section>>
 </html>

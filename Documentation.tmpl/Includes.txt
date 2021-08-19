@@ -19,3 +19,5 @@
 .. role::   php(code)
 
 .. highlight:: php
+
+.. |img-include-ts|      image:: /Images/AdministratorManual/img-include-ts.png

@@ -120,7 +120,8 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
      */
     public function getFileName($file)
     {
-        $filename = explode(".", $file->getProperty('name'));
+        $filename = explode("/", $file->getProperty('identifier'));
+        $filename = explode(".",  $filename[count($filename)-1]);
         return $filename[0];
     }
 

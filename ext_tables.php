@@ -12,9 +12,9 @@ call_user_func(
                 'm2', // Submodule key
                 '', // Position
                 [
-                    'Administration' => 'index', 'importVideos',
-                    'Workspace' => 'list, new, create, edit, update, delete',
-                    'Player' => 'list, new, create, edit, update, delete'
+                    'Administration' => 'overview, index, import, update',
+                    'Workspace' => 'list, new, create, edit, update, delete, show',
+                    'Player' => 'list, new, create, edit, update, delete, show'
 
                 ],
                 [

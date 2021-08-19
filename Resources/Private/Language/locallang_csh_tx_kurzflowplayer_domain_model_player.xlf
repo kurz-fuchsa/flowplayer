@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2021-07-29T14:01:56Z" product-name="kurz_flowplayer">
+		<header/>
+		<body>
+			<trans-unit id="player_id.description">
+				<source>playerId</source>
+			</trans-unit>
+			<trans-unit id="player_name.description">
+				<source>playerName</source>
+			</trans-unit>
+			<trans-unit id="workspace.description">
+				<source>workspace</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

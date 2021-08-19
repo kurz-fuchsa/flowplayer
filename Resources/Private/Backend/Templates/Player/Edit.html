@@ -11,18 +11,25 @@
           Edit.html: keep
 
   Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
+  <f:section name="menu">
+    <f:render partial="Administration/Menu" arguments="{_all}" />
+  </f:section>
   <f:section name="content">
-    <h1>Edit Player</h1>
 
-    <f:flashMessages />
 
+    <h1>
+      <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="30"
+               style="float:left; margin-right: 10px;"/>
+      <f:translate key="title"/>
+    </h1>
+    <f:flashMessages/>
+    <h2>Edit Player</h2>
     <f:render partial="FormErrors" />
 
     <f:form action="update" name="player" object="{player}" >
     <f:render partial="Player/FormFields" arguments="{_all}" />
       <div class="form-group row">
-    <f:form.submit value="Save" />
+    <f:form.submit value="Save" class="btn btn-default"/>
       </div>
     </f:form>
   </f:section>

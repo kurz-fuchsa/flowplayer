@@ -12,16 +12,24 @@
 
   Otherwise your changes will be overwritten the next time you save the extension in the extension builder
 
+  <f:section name="menu">
+    <f:render partial="Administration/Menu" arguments="{_all}" />
+  </f:section>
+
   <f:section name="content">
-    <h1>Edit Workspace</h1>
 
+    <h1>
+      <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="30"
+               style="float:left; margin-right: 10px;"/>
+      <f:translate key="title"/>
+    </h1>
     <f:flashMessages />
-
+    <h2>Edit Workspace</h2>
     <f:render partial="FormErrors" />
 
     <f:form action="update" name="workspace" object="{workspace}" >
     <f:render partial="Workspace/FormFields" arguments="{workspace:workspace}" />
-    <f:form.submit value="Save" />
+    <f:form.submit value="Save" class="btn btn-default" />
     </f:form>
   </f:section>
 </html>

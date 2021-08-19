@@ -56,6 +56,7 @@ FAL flowplayer Driver
 	Introduction/Index
 	User/Index
 	Administrator/Index
+	Instalation/Index
 	Configuration/Index
 	Developer/Index
 	KnownProblems/Index

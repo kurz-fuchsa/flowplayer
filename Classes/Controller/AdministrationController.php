@@ -4,6 +4,7 @@ namespace KURZ\KurzFlowplayer\Controller;
 
 use KURZ\KurzFlowplayer\Lib\HTTP\HttpRequest;
 use TYPO3\CMS\Core\Exception;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Index\FileIndexRepository;
@@ -73,6 +74,15 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     protected $workspaceRepository = null;
 
     /**
+     * playerRepository
+     *
+     * @var \KURZ\KurzFlowplayer\Domain\Repository\PlayerRepository
+     * @inject
+     */
+    protected $playerRepository = null;
+
+
+    /**
      * AdministrationController constructor.
      * @param StorageRepository $storageRepository
      */
@@ -83,12 +93,12 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
 
 
     /**
-     * action index
+     * action overview
      *
      * @return void
      */
-    public function indexAction()
-    {
+    public function overviewAction(){
+
         $siteId = '';
         $fileStorages = $this->storageRepository->findByStorageType('FlowplayerFalDriver');
         $this->storage = $fileStorages[0];
@@ -101,17 +111,16 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,
                 TRUE
             );
-        } else {
-
+        }else{
             $this->storageConfiguration = $this->storage->getConfiguration();
             if ($this->request->hasArgument('siteId')) {
                 $siteId = $this->request->getArgument('siteId');
                 $res = $this->workspaceRepository->findOneBySiteId($siteId);
 
-                try{
+                try {
                     $apiKey = $res->getApiKey();
-                }catch ( Exception $exception ){
-                    $exception->getMessage();
+                } catch (Exception $exception) {
+                    //$exception->getMessage();
                 }
 
             }
@@ -126,22 +135,12 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
 
             $request = new HttpRequest($videosUrl, $httpHeader);
 
-            if($r = $request->executeRESTCall("GET", null)){
-
+            if ($r = $request->executeRESTCall("GET", null)) {
                 $videos = json_decode($r);
-                $basePath = GeneralUtility::getFileAbsFileName(
-                    $this->storageConfiguration['basePath']
-                );
                 if ($videos->total_count > 0) {
-                    foreach ($videos->assets as $video) {
-                        if ($video->{JsonParameters::ID}) {
-                            $this->createNewFile($video);
-                        }
-                    }
                     $this->view->assign('videos', $videos);
-
                 }
-            }else{
+            } else {
                 $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
                 $this->addFlashMessage(
                     'Please check your proxy settings in configuration options for this extension.',
@@ -151,13 +150,130 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                 );
             }
 
+        }
+        $players = $this->playerRepository->findAll();
+
+        $this->view->assign('workspaces', $workspaces);
+        $this->view->assign('siteId', $siteId);
+        $this->view->assign('players', $players);
+
+    }
+
+    /**
+     * action index
+     *
+     * @return void
+     */
+    public function indexAction()
+    {
+        $siteId = '';
+        $fileStorages = $this->storageRepository->findByStorageType('FlowplayerFalDriver');
+        $this->storage = $fileStorages[0];
+        $workspaces = $this->workspaceRepository->findAll();
+
+
+        if (count($fileStorages) < 1) {
+            $this->addFlashMessage(
+                'Please adding Flowplayer File Storage in TYPO3 Backend.',
+                'Flowplayer storage FAL driver not defined',
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,
+                TRUE
+            );
+        } else {
+
+            $this->storageConfiguration = $this->storage->getConfiguration();
+            if ($this->request->hasArgument('siteId')) {
+                $siteId = $this->request->getArgument('siteId');
+                $res = $this->workspaceRepository->findOneBySiteId($siteId);
+                $this->view->assign('workspace', $res);
+                try {
+                    $apiKey = $res->getApiKey();
+                } catch (Exception $exception) {
+                    //$exception->getMessage();
+                }
+
+            }
+
+            $apiBaseURL = $this->storageConfiguration['apiBaseURL'];
+            ///Endpoint for listing a Video
+            $videosUrl = $apiBaseURL . "videos";
+            $httpHeader = [
+                'Content-Type: application/json',
+                'x-flowplayer-api-key:' . $apiKey
+            ];
+
+            $request = new HttpRequest($videosUrl, $httpHeader);
+
+            if ($r = $request->executeRESTCall("GET", null)) {
+
+                $videos = json_decode($r);
+                $basePath = GeneralUtility::getFileAbsFileName(
+                    $this->storageConfiguration['basePath']
+                );
+                if ($videos->total_count > 0) {
+                    foreach ($videos->assets as $video) {
+                        if ($video->{JsonParameters::ID}) {
+
+
+                            if ($this->request->hasArgument('method') && $this->request->hasArgument('asset')) {
+
+                                $method = $this->request->getArgument('method');
+                                $assetid = $this->request->getArgument('asset');
+
+                                switch ($method) {
+                                    case 'update':
+                                            if ($video->id === $assetid) {
+                                                $this->replaceFile($video);
+                                            }
+                                        break;
+                                    case 'import':
+                                            if ($video->id === $assetid) {
+                                                $this->createNewFile($video);
+                                            }
+                                        break;
+                                }
+                            }
+                            $video->isInFalExist = $this->isFileExist($video);
+                        }
+                    }
+                    $this->view->assign('videos', $videos);
+
+                }
+            } else {
+                $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+                $this->addFlashMessage(
+                    'Please check your proxy settings in configuration options for this extension.',
+                    'Proxy Setting is ' . $this->extConf['useProxy'],
+                    \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,
+                    TRUE
+                );
+            }
 
             $this->view->assign('workspaces', $workspaces);
-            $this->view->assign('siteId',  $siteId );
+            $this->view->assign('siteId', $siteId);
+
+
         }
 
     }
 
+    /**
+     *
+     */
+    public function importAction()
+    {
+
+
+    }
+
+    /**
+     *
+     */
+    public function updateAction()
+    {
+
+
+    }
 
     /**
      * Create new OnlineMedia item container file
@@ -171,7 +287,6 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
     protected function createNewFile($video)
     {
 
-
         $ordnername = $this->storage->sanitizeFileName($video->{JsonParameters::WORKSPACE}->name);
         try {
             /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
@@ -180,10 +295,11 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
             /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
             $folder = $this->storage->createFolder("/" . $ordnername . "/");
         }
-
+        $name = $this->storage->sanitizeFileName($video->name);
         $file = $folder->createFile($video->{JsonParameters::ID} . '.flowplayer');
         $properties = $file->getProperties();
         $properties['type'] = File::FILETYPE_VIDEO;
+        $properties['name'] = $name . '.flowplayer';
         $file->updateProperties($properties);
         $file->setContents($video->{JsonParameters::WORKSPACE}->id);
         $this->updateFileProperties($file, $properties);
@@ -234,6 +350,55 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
         $fileIndexRepository->update($fileObject);
     }
 
+    /**
+     * @param $video
+     * @return bool
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
+     */
+    protected function isFileExist($video)
+    {
+        $ordnername = $this->storage->sanitizeFileName($video->{JsonParameters::WORKSPACE}->name);
+
+        try {
+            /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+            $folder = $this->storage->getFolder("/" . $ordnername . "/");
+            if ($folder->getStorage()->hasFileInFolder($video->{JsonParameters::ID} . '.flowplayer', $folder)) {
+                return true;
+            }
+        } catch (FileDoesNotExistException $e) {
+            return false;
+        } catch (FolderDoesNotExistException $e) {
+            return false;
+        }
+        return false;
+
+    }
+
+    /**
+     * @param $video
+     * @return bool
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
+     */
+    private function replaceFile($video)
+    {
+        $ordnername = $this->storage->sanitizeFileName($video->{JsonParameters::WORKSPACE}->name);
+
+
+        try {
+            /** @var \TYPO3\CMS\Core\Resource\Folder $folder */
+            $folder = $this->storage->getFolder("/" . $ordnername . "/");
+            $file = $this->storage->getFile($folder->getIdentifier() . $video->{JsonParameters::ID} . '.flowplayer');
+            //$folder->getStorage()->replaceFile($file, $folder->getIdentifier() . $video->{JsonParameters::ID} . '.flowplayer');
+            return true;
+        } catch (FileDoesNotExistException $e) {
+            return false;
+        } catch (FolderDoesNotExistException $e) {
+            return false;
+        }
+        return false;
+    }
 
 
 }

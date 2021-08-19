@@ -87,8 +87,8 @@ class FlowplayerVideoRenderer implements FileRendererInterface
      */
     public function render(\TYPO3\CMS\Core\Resource\FileInterface $file, $width, $height, array $options = [], $usedPathsRelativeToCurrentScript = false)
     {
-        $filename = explode(".", $file->getProperty('name'));
-        $videoId = $filename[0];
+
+        $videoId = $this->getFileName($file);
         $siteId = $file->getContents();
         $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
         $propertiesOfFileReference = $file->getProperties();
@@ -116,9 +116,9 @@ class FlowplayerVideoRenderer implements FileRendererInterface
         if ($propertiesOfFileReference['height']) {
             $attributes[] = 'height="' . (int)$propertiesOfFileReference['height'] . '"';
         }
-       // if ($propertiesOfFileReference['title']) {
-            $attributes[] = 'title="' . $options['title'] . '"';
-       // }
+        // if ($propertiesOfFileReference['title']) {
+        $attributes[] = 'title="' . $options['title'] . '"';
+        // }
 
         if ($propertiesOfFileReference['player']) {
             $player = '//embed.flowplayer.com/api/video/embed.jsp?id='.$videoId.'&pi='.  $propertiesOfFileReference['player'];
@@ -127,7 +127,7 @@ class FlowplayerVideoRenderer implements FileRendererInterface
         }
 
         $attributes[] = ' byline="0" portrait="0" frameborder="0" ';
-            ///return '<div data-player-id="5c149835-639d-42b4-abb8-ab70a6372e2d"><script src="//cdn.flowplayer.com/players/'.$siteId.'/native/flowplayer.async.js">{"src": "'. $videoId.'"}</script></div>';
+        ///return '<div data-player-id="5c149835-639d-42b4-abb8-ab70a6372e2d"><script src="//cdn.flowplayer.com/players/'.$siteId.'/native/flowplayer.async.js">{"src": "'. $videoId.'"}</script></div>';
 
         $iframe =  sprintf('<div %s><iframe %s src="%s" %s></iframe></div>',
             'class="flowplayer-embed-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;"',
@@ -143,6 +143,17 @@ src="//ljsp.lwcdn.com/api/video/embed.jsp?id='. $videoId.'&pi=a29c6a42-b142-42fa
 title="0" byline="0" portrait="0" width="640" height="360" frameborder="0" allow="autoplay"></iframe>
 </div>';
         return $js;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Core\Resource\File $file
+     * @return string
+     */
+    public function getFileName($file)
+    {
+        $filename = explode("/", $file->getProperty('identifier'));
+        $filename = explode(".",  $filename[count($filename)-1]);
+        return $filename[0];
     }
 
 }

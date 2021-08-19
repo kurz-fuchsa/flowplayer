@@ -66,6 +66,45 @@
 			<trans-unit id="tx_kurzflowplayer_domain_model_player.player_name">
 				<source>Player Name</source>
 			</trans-unit>
+			<trans-unit id="module_overview">
+				<source>Overview</source>
+			</trans-unit>
+			<trans-unit id="new_workspace">
+				<source>Add new Workspace</source>
+			</trans-unit>
+			<trans-unit id="new_player">
+				<source>Add new Player</source>
+			</trans-unit>
+			<trans-unit id="list_workspaces">
+				<source>Workspaces Overview</source>
+			</trans-unit>
+			<trans-unit id="list_player">
+				<source>Players Overview</source>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Flowplayer Administration Module</source>
+			</trans-unit>
+			<trans-unit id="thumbnail">
+			Thumbnail
+			</trans-unit>
+			<trans-unit id="number">
+				Nr.
+			</trans-unit>
+			<trans-unit id="video_id">
+			Video ID
+			</trans-unit>
+			<trans-unit id="video_title">
+				Title
+			</trans-unit>
+			<trans-unit id="video_description">
+				Description
+			</trans-unit>
+			<trans-unit id="video_tags">
+				Tags
+			</trans-unit>
+			<trans-unit id="video">
+				Video
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

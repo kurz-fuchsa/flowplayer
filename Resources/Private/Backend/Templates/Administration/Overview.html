@@ -1,0 +1,82 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flowplayer="http://typo3.org/ns/KURZ/KurzFlowplayer/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default"/>
+
+<f:section name="menu">
+  <f:render partial="Administration/Menu" arguments="{_all}"/>
+</f:section>
+
+<f:section name="content">
+  <h1>
+    <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="30"
+             style="float:left; margin-right: 10px;"/>
+    <f:translate key="title"/>
+  </h1>
+  <f:flashMessages/>
+
+
+  <h2>
+    <f:translate key="module_overview"/>
+  </h2>
+
+  <dl class="t3-overview-list">
+
+    <f:if condition="{workspaces}">
+      <f:for each="{workspaces}" as="workspace">
+        <dt>
+          <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="16"/>
+          <f:link.action action="index" arguments="{siteId: workspace.siteId}" controller="Administration">
+            {workspace.name}
+          </f:link.action>
+        </dt>
+      </f:for>
+      <dt>--------------------------------</dt>
+      <dt>
+        <flowplayer:spriteIcon iconName="mimetypes-x-sys_workspace"/>
+        <f:link.action action="list" controller="Workspace">
+          <f:translate key="list_workspaces"/>
+        </f:link.action>
+      </dt>
+    </f:if>
+    <dt>
+
+      <f:link.action action="new" controller="Workspace">
+        <flowplayer:spriteIcon iconName="overlay-new"/>
+        <f:translate key="new_workspace"/>
+      </f:link.action>
+    </dt>
+    <f:if condition="{players}">
+      <dt>
+        <f:link.action action="list" controller="Player">
+          <flowplayer:spriteIcon iconName="mimetypes-media-video"/>
+          <f:translate key="list_player"/>
+        </f:link.action>
+      </dt>
+    </f:if>
+    <dt>
+      <f:link.action action="new" controller="Player">
+        <flowplayer:spriteIcon iconName="overlay-new"/>
+        <f:translate key="new_player"/>
+      </f:link.action>
+    </dt>
+    <dt>--------------------------------</dt>
+    <dt>
+      <a href="https://flowplayer.com/" target="_blank">
+        <flowplayer:spriteIcon iconName="apps-pagetree-page-shortcut-external"/>
+        flowplayer.com</a>
+    </dt>
+    <dt>
+      <a href="https://flowplayer.com/developers/platform-api/getting-started" target="_blank">
+        <flowplayer:spriteIcon iconName="apps-pagetree-page-shortcut-external"/>
+        Platform API</a>
+    </dt>
+
+  </dl>
+
+</f:section>
+
+<f:flashMessages/>
+
+</html>

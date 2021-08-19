@@ -1,14 +1,26 @@
 <html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-<label for="siteID">
-	<f:translate key="tx_kurzflowplayer_domain_model_workspace.site_id" />
-</label><br />
-	<f:form.textfield property="siteId" /><br />
-<label for="name">
-	<f:translate key="tx_kurzflowplayer_domain_model_workspace.name" />
-</label><br />
-	<f:form.textfield property="name" /><br />
-<label for="apiKey">
-	<f:translate key="tx_kurzflowplayer_domain_model_workspace.api_key" />
-</label><br />
-	<f:form.textfield property="apiKey" /><br />
+<div class="form-group row">
+  <div class="form-control-clearable">
+    <label for="siteID">
+      <f:translate key="tx_kurzflowplayer_domain_model_workspace.site_id"/>
+    </label>
+    <f:form.textfield property="siteId" class="form-control"/>
+  </div>
+</div>
+<div class="form-group row">
+  <div class="form-control-clearable">
+    <label for="name">
+      <f:translate key="tx_kurzflowplayer_domain_model_workspace.name"/>
+    </label>
+    <f:form.textfield property="name" class="form-control"/>
+  </div>
+</div>
+<div class="form-group row">
+  <div class="form-control-clearable">
+    <label for="apiKey">
+      <f:translate key="tx_kurzflowplayer_domain_model_workspace.api_key"/>
+    </label>
+    <f:form.textfield property="apiKey" class="form-control"/>
+  </div>
+</div>
 </html>
