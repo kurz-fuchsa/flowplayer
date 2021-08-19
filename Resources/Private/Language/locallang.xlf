@@ -85,25 +85,25 @@
 				<source>Flowplayer Administration Module</source>
 			</trans-unit>
 			<trans-unit id="thumbnail">
-			Thumbnail
+				<source>Thumbnail</source>
 			</trans-unit>
 			<trans-unit id="number">
-				Nr.
+				<source>Nr.</source>
 			</trans-unit>
 			<trans-unit id="video_id">
-			Video ID
+				<source>Video ID</source>
 			</trans-unit>
 			<trans-unit id="video_title">
-				Title
+				<source>Title</source>
 			</trans-unit>
 			<trans-unit id="video_description">
-				Description
+				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="video_tags">
-				Tags
+				<source>Tags</source>
 			</trans-unit>
 			<trans-unit id="video">
-				Video
+				<source>Video</source>
 			</trans-unit>
 		</body>
 	</file>

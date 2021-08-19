@@ -10,7 +10,7 @@
 conf.py:
   copyright: 2021
   project: FAL flowplayer Driver
-  version: 1.0.0
+  version: 1.0.7
   release: 1.0.0
   intersphinx_mapping:
     t3tsref:
