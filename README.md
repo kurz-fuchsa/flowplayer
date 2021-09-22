@@ -17,6 +17,50 @@ You can set this up via composer (`composer require kurz/kurz-flowplayer`) or vi
 TER (extension name "kurz_flowplayer"), it runs with TYPO3 v8 LTS, TYPO3 v9 LTS und TYPO3 v10 LTS.
 
 
+## Include static template
+
+In your main Template include the "static TypoScript template" of the extension kurz_flowplayer.</h4>
+<ol>
+  <li>Switch to the Template module and select Info/Modify.</li>
+  <li>Switch to the root page of your site and press the link Edit the whole template record and switch to the tab Includes.</li>
+  <li>Select FAL flowplayer Driver (kurz_flowplayer) at the field Include static (from extensions):</li>
+</ol>
+<div><img src="./Resources/Public/Images/img-include-ts.png"  alt="Include static template" /></div>
+
+## Create a File Storage Record
+
+Add a new file storage with the "Flowplayer" driver to root page.
+<div><img src="./Resources/Public/Images/add_new_storage.png"  alt="Include static template" /></div>
+
+If you go to the Filelist module, you should see your Flowplayer File Storage there.
+
+<div><img src="./Resources/Public/Images/add_new_storage_2.png"  alt="Include static template" /></div>
+
+## Flowplayer Administration Module
+
+<h4>Add new Workspace</h4>
+In Administration Module from Flowplayer you can add of multiple workspaces (sometimes referred to as sites) within your organization. A workspace is a sub-grouping of your videos and can be found in the leftmost sidebar of flowplayer administration site (https://flowplayer.com/login).
+
+Each workspace has a unique list of videos and livestreams. In addition each workspace has a separate set of metadata including for example tags, categories and custom metadata fields. 
+
+<div><img src="./Resources/Public/Images/add_new_workspace.png"  alt="add Workspace" /></div>
+<div><img src="./Resources/Public/Images/flowplayer_api_key.png"  alt="add Workspace" /></div>
+
+If the workspace was created successfully you can import the video from the flowplayer cloud into the TYPO3 file storage.
+
+<div><img src="./Resources/Public/Images/import_flowplayer.png"  alt="import the video" /></div>
+<div><img src="./Resources/Public/Images/import_flowplayer_2.png"  alt="import the video" /></div>
+<div><img src="./Resources/Public/Images/import_flowplayer_2.png"  alt="import the video" /></div>
+
+
+<h4>Add new Player</h4>
+
+You can also add your in flowplayer cloud existing player configuration here:
+<div><img src="./Resources/Public/Images/add_new_player.png"  alt="add Player" /></div>
+
+Player choose will be available in the media content element.
+
+<div><img src="./Resources/Public/Images/player.png"  alt="Player choose" /></div>
 
 ## License
 
