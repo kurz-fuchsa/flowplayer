@@ -11,7 +11,9 @@ $GLOBALS['TCA']['sys_file_reference']['palettes']['videoOverlayPalette'] = array
     ]
 );*/
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette('sys_file_reference', 'videoOverlayPalette', 'title, description,--linebreak--,autoplay, videoloop, muted, --linebreak--, height,  width');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+    'sys_file_reference', 'videoOverlayPalette', 'title, description,--linebreak--,autoplay, videoloop, muted,
+     --linebreak--, height,  width');
 
 $GLOBALS['TCA']['tt_content']['types']['media']['columnsOverrides']['assets']['config'] =
     [

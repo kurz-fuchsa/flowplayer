@@ -1,6 +1,8 @@
 <?php
 namespace KURZ\KurzFlowplayer\Lib\HTTP;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+
 /***
  *
  * This file is part of the "FAL flowplayer Driver" Extension for TYPO3 CMS.
@@ -82,8 +84,9 @@ class HttpRequest {
     {
 
         ///The extension configuration stored in $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'] since v 9.0 has been deprecated
-        $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
-
+        //$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+        $this->extConf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(ExtensionConfiguration::class)
+            ->get('kurz_flowplayer');
         $curl = curl_init();
         if ($this->extConf['useProxy']) {
             curl_setopt($curl, CURLOPT_PROXY, $this->extConf['proxyUrl']);

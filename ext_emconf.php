@@ -16,14 +16,14 @@ $EM_CONF[$_EXTKEY] = [
     'category' => 'driver',
     'author' => 'Alexander Fuchs',
     'author_email' => 'alexander.fuchs@kurz.de',
-    'state' => 'alpha',
+    'state' => 'beta',
     'uploadfolder' => 1,
     'createDirs' => '',
     'clearCacheOnLoad' => 0,
-    'version' => '1.0.8',
+    'version' => '10.1.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-8.7.99',
+            'typo3' => '10.4.0-10.9.99'
         ],
         'conflicts' => [],
         'suggests' => [],

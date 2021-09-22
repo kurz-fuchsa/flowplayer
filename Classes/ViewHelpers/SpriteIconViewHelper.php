@@ -12,16 +12,28 @@ class SpriteIconViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBacke
      */
     protected $escapeOutput = false;
 
+
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+
+        $this->registerArgument('iconName', 'string', 'iconName', true);
+        $this->registerArgument('options', 'array', 'Options', false, null );
+        $this->registerArgument('uid', 'int', 'uid', false, 0);
+    }
+
+
     /**
      * Prints sprite icon html for $iconName key.
      *
-     * @param string $iconName
-     * @param array $options
-     * @param int $uid
      * @return string
      */
-    public function render($iconName, $options = array(), $uid = 0)
+    public function render()
     {
+        $iconName = $this->arguments['iconName'];
+        $options = $this->arguments['options'] ?? array();
+        $uid = $this->arguments['uid'] ?? 0;
+
         if (!isset($options['title']) && $uid > 0) {
             $options['title'] = 'id=' . $uid;
         }

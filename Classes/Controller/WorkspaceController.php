@@ -12,6 +12,9 @@ namespace KURZ\KurzFlowplayer\Controller;
  *
  ***/
 
+use TYPO3\CMS\Extbase\Annotation\Inject;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+
 /**
  * WorkspaceController
  */
@@ -21,7 +24,7 @@ class WorkspaceController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * workspaceRepository
      *
      * @var \KURZ\KurzFlowplayer\Domain\Repository\WorkspaceRepository
-     * @inject
+     * @Inject
      */
     protected $workspaceRepository = null;
 
@@ -74,7 +77,7 @@ class WorkspaceController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * action edit
      *
      * @param \KURZ\KurzFlowplayer\Domain\Model\Workspace $workspace
-     * @ignorevalidation $workspace
+     * @IgnoreValidation $workspace
      * @return void
      */
     public function editAction(\KURZ\KurzFlowplayer\Domain\Model\Workspace $workspace)

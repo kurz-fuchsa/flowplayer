@@ -2,6 +2,7 @@
 namespace KURZ\KurzFlowplayer\Controller;
 
 use KURZ\KurzFlowplayer\Domain\Repository\WorkspaceRepository;
+use TYPO3\CMS\Extbase\Annotation\Inject;
 
 /***
  *
@@ -23,7 +24,7 @@ class PlayerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * playerRepository
      *
      * @var \KURZ\KurzFlowplayer\Domain\Repository\PlayerRepository
-     * @inject
+     * @Inject
      */
     protected $playerRepository = null;
 
@@ -31,7 +32,7 @@ class PlayerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * workspaceRepository
      *
      * @var \KURZ\KurzFlowplayer\Domain\Repository\WorkspaceRepository
-     * @inject
+     * @Inject
      */
     protected $workspaceRepository = null;
 

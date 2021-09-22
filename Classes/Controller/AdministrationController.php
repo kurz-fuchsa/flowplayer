@@ -12,7 +12,7 @@ use TYPO3\CMS\Core\Resource\Index\MetaDataRepository;
 use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use KURZ\KurzFlowplayer\Constants\JsonParameters;
-
+use TYPO3\CMS\Extbase\Annotation\Inject;
 /***
  *
  * This file is part of the "FAL flowplayer Driver" Extension for TYPO3 CMS.
@@ -33,7 +33,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      * administrationRepository
      *
      * @var \KURZ\KurzFlowplayer\Domain\Repository\AdministrationRepository
-     * @inject
+     * @Inject
      */
     protected $administrationRepository = null;
 
@@ -69,7 +69,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      * workspaceRepository
      *
      * @var \KURZ\KurzFlowplayer\Domain\Repository\WorkspaceRepository
-     * @inject
+     * @Inject
      */
     protected $workspaceRepository = null;
 
@@ -77,7 +77,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      * playerRepository
      *
      * @var \KURZ\KurzFlowplayer\Domain\Repository\PlayerRepository
-     * @inject
+     * @Inject
      */
     protected $playerRepository = null;
 
@@ -330,7 +330,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
 
         );
 
-        $fileObject->_updateMetaDataProperties($newMetaData);
+        $fileObject->updateProperties($newMetaData);
         $metaDataRepository = MetaDataRepository::getInstance();
         $metaDataRepository->update($fileObject->getUid(), $newMetaData);
     }
