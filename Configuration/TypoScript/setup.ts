@@ -14,6 +14,15 @@ module.tx_kurzflowplayer_tools_kurzflowplayerm2 {
     }
 }
 
+page.includeJSFooterlibs {
+
+    aos = https://unpkg.com/aos@next/dist/aos.js
+    ###aos.async = 1
+    aos.external = 1
+    aos.disableCompression = 1
+    aos.excludeFromConcatenation = 1
+}
+
 ######################
 #### CTYPE: MEDIA ####
 ######################

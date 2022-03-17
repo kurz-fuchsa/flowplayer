@@ -52,6 +52,44 @@ $GLOBALS['TCA']['tt_content']['types']['media']['columnsOverrides']['assets']['c
         ]
     ];
 
+$GLOBALS['TCA']['tt_content']['types']['parallax']['columnsOverrides']['assets']['config'] =
+    [
+        'filter' => [
+            0 => [
+                'parameters' => [
+                    'allowedFileExtensions' => 'jpg,jpeg,png,mp4,ogg,flowplayer'
+                ]
+            ]
+        ],
+        'foreign_selector_fieldTcaOverride' => [
+            'config' => [
+                'appearance' => [
+                    'elementBrowserAllowed' => 'youtube, vimeo, flowplayer, mp4'
+                ]
+            ]
+        ],
+        'overrideChildTca' => [
+            'columns' => [
+                'uid_local' => [
+                    'config' => [
+                        'appearance' => [
+                            'elementBrowserAllowed' => 'jpg,jpeg,png,mp4,youtube,vimeo,flowplayer'
+                        ]
+                    ]
+                ]
+            ],
+            'types' =>[
+                \TYPO3\CMS\Core\Resource\File::FILETYPE_VIDEO => [
+                    'showitem' => '
+                                    --palette--;LLL:EXT:lang/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.videoOverlayPalette;videoOverlayPalette,
+                                    --palette--;;filePalette'
+                ]
+            ]
+
+        ]
+    ];
+
+
 
 
 
