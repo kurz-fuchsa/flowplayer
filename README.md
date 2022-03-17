@@ -46,21 +46,10 @@ Each workspace has a unique list of videos and livestreams. In addition each wor
 <div><img src="./Resources/Public/Images/add_new_workspace.png"  alt="add Workspace" /></div>
 <div><img src="./Resources/Public/Images/flowplayer_api_key.png"  alt="add Workspace" /></div>
 
-If the workspace was created successfully you can import the video from the flowplayer cloud into the TYPO3 file storage.
-
-<div><img src="./Resources/Public/Images/import_flowplayer.png"  alt="import the video" /></div>
-<div><img src="./Resources/Public/Images/import_flowplayer_2.png"  alt="import the video" /></div>
-<div><img src="./Resources/Public/Images/import_flowplayer_2.png"  alt="import the video" /></div>
-
-
 <h4>Add new Player</h4>
 
-You can also add your in flowplayer cloud existing player configuration here:
-<div><img src="./Resources/Public/Images/add_new_player.png"  alt="add Player" /></div>
 
-Player choose will be available in the media content element.
 
-<div><img src="./Resources/Public/Images/player.png"  alt="Player choose" /></div>
 
 ## License
 
