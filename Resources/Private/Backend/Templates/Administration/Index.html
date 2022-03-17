@@ -10,16 +10,16 @@
 
 <f:section name="content">
 
-      <style>
+  <style>
 
-        table tr th {
-          position: sticky !important;
-          top: 0 !important;
-          background-color: #a8a19f;
-          z-index: 900000;
-        }
+    table tr th {
+      position: sticky !important;
+      top: 0 !important;
+      background-color: #a8a19f;
+      z-index: 900000;
+    }
 
-      </style>
+  </style>
   <h1>
     <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="30"
              style="float:left; margin-right: 10px;"/>
@@ -30,57 +30,57 @@
     <f:translate key="tx_kurzflowplayer_domain_model_workspace"/> info: Name: {workspace.name}, Site Id: {workspace.siteId}
   </h2>
 
-      <table style="text-align: center; " class="table table-bordered">
-        <tr>
-          <th class="col-md-1" style="text-align: left; "><f:translate key="number"/></th>
-          <th class="col-md-1"><f:translate key="video_id"/></th>
-          <th class="col-md-1"></th>
-          <th class="col-md-3" style="text-align: center"><f:translate key="video_title"/></th>
-          <th class="col-md-3" style="text-align: center"><f:translate key="video_description"/></th>
-          <th class="col-md-1" style="text-align: center"><f:translate key="video_tags"/></th>
-          <th class="col-md-1" style="text-align: center"><f:translate key="thumbnail"/></th>
-          <th class="col-md-1" style="text-align: center"><f:translate key="video"/></th>
-        </tr>
+  <table style="text-align: center; " class="table table-bordered">
+    <tr>
+      <th class="col-md-1" style="text-align: left; "><f:translate key="number"/></th>
+      <th class="col-md-1"><f:translate key="video_id"/></th>
+      <th class="col-md-1"></th>
+      <th class="col-md-3" style="text-align: center"><f:translate key="video_title"/></th>
+      <th class="col-md-3" style="text-align: center"><f:translate key="video_description"/></th>
+      <th class="col-md-1" style="text-align: center"><f:translate key="video_tags"/></th>
+      <th class="col-md-1" style="text-align: center"><f:translate key="thumbnail"/></th>
+      <th class="col-md-1" style="text-align: center"><f:translate key="video"/></th>
+    </tr>
 
-        <f:for each="{videos.assets}" as="video" iteration="iterator">
-          <tr class="{f:if(condition:video.isInFalExist,then:'success')}">
-            <td>{iterator.cycle}</td>
-            <td>{video.id}</td>
-            <td>
-              <f:if condition="{video.isInFalExist}">
-                <f:then>
-                  <f:link.action class="btn btn-default" action="index" controller="Administration" arguments="{asset : video.id, siteId: video.workspace.id, method: 'update'}">Update</f:link.action>
-                </f:then>
-                <f:else>
-                  <f:link.action class="btn btn-default" action="index" controller="Administration" arguments="{asset : video.id, siteId: video.workspace.id, method: 'import'}">Import</f:link.action>
-                </f:else>
+    <f:for each="{videos.assets}" as="video" iteration="iterator">
+      <tr class="{f:if(condition:video.isInFalExist,then:'success')}">
+        <td>{iterator.cycle}</td>
+        <td>{video.id}</td>
+        <td>
+          <f:if condition="{video.isInFalExist}">
+            <f:then>
+              <f:link.action class="btn btn-default" action="index" controller="Administration" arguments="{asset : video.id, siteId: video.workspace.id, method: 'update'}">Update</f:link.action>
+            </f:then>
+            <f:else>
+              <f:link.action class="btn btn-default" action="index" controller="Administration" arguments="{asset : video.id, siteId: video.workspace.id, method: 'import'}">Import</f:link.action>
+            </f:else>
 
-              </f:if>
-            </td>
-            <td>{video.name}
-            </td>
-            <td>{video.description}</td>
-            <td>{video.tags}
-            </td>
-            <td><img src="{video.images.0.url}"  width="100%"/></td>
-            <td>
-              <div class="flowplayer-embed-container"
-                   style="position: relative; padding-bottom: 50%; height: 0; overflow: hidden; width:100%;">
-                <iframe style="position: absolute; top: 0; left: 0; width: 200px; height: 100px;"
-                        webkitAllowFullScreen mozallowfullscreen
-                        allowfullscreen src="//ljsp.lwcdn.com/api/video/embed.jsp?id={video.id}"
-                        title="0" byline="0" portrait="0" frameborder="0" allow="autoplay">
-                </iframe>
-              </div>
-            </td>
+          </f:if>
+        </td>
+        <td>{video.name}
+        </td>
+        <td>{video.description}</td>
+        <td>{video.tags}
+        </td>
+        <td><img src="{video.images.0.url}"  width="100%"/></td>
+        <td>
+          <div class="flowplayer-embed-container"
+               style="position: relative; padding-bottom: 50%; height: 0; overflow: hidden; width:100%;">
+            <iframe style="position: absolute; top: 0; left: 0; width: 200px; height: 100px;"
+                    webkitAllowFullScreen mozallowfullscreen
+                    allowfullscreen src="//ljsp.lwcdn.com/api/video/embed.jsp?id={video.id}"
+                    title="0" byline="0" portrait="0" frameborder="0" allow="autoplay">
+            </iframe>
+          </div>
+        </td>
 
-          </tr>
+      </tr>
 
-        </f:for>
-        <tr>
-          <td colspan="12" height="20"></td>
-        </tr>
-      </table>
+    </f:for>
+    <tr>
+      <td colspan="12" height="20"></td>
+    </tr>
+  </table>
 
 
 </f:section>>

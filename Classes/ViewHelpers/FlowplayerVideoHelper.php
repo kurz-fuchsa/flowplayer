@@ -15,9 +15,11 @@ namespace KURZ\KurzFlowplayer\ViewHelpers;
  ***/
 
 
+use KURZ\KurzFlowplayer\Connection\ApiConnection;
 use KURZ\KurzFlowplayer\Constants\JsonParameters;
 use KURZ\KurzFlowplayer\Lib\HTTP\HttpRequest;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\AbstractOEmbedHelper;
@@ -29,6 +31,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FlowplayerVideoHelper extends AbstractOEmbedHelper
 {
+    /**
+     * @var \KURZ\KurzFlowplayer\Connection\ApiConnection
+     */
+    protected $apiConnection;
 
 
     /**
@@ -44,9 +50,9 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
         $videoId = $this->getFileName($file);
         $response = $this->requestingAPI($file, $videoId);
 
-        $encodings = $response->{JsonParameters::ENCODINGS};
+        $encodings = $response[JsonParameters::ENCODINGS];
         //return sprintf('https://cdn.flowplayer.com/%s', rawurlencode($videoId));
-        return $encodings[0]->{JsonParameters::ENCODING_VIDEO_FILE_URL};
+        return $encodings[0][JsonParameters::ENCODING_VIDEO_FILE_URL];
     }
 
 
@@ -56,35 +62,27 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
      */
     public function getPreviewImage(File $file)
     {
+        /** @var $logger \TYPO3\CMS\Core\Log\Logger */
+        $this->logger = GeneralUtility::makeInstance(LogManager::class)
+            ->getLogger(__CLASS__);
 
         $videoId = $this->getFileName($file);
-        $response = $this->requestingAPI($file, $videoId);
         $temporaryFileName = $this->getTempFolderPath() . 'flowplayer_' . md5($videoId) . '.jpg';
 
-        $previewImage = GeneralUtility::getUrl(
-            $response->images[0]->url
-        );
+        $response = $this->requestingAPI($file, $videoId);
 
-        if ($images = $response->{JsonParameters::IMAGES}) {
-                    foreach ($images as $image) {
-                        if ($image->type == JsonParameters::IMAGE_TYPE_THUMBNAIL) {
-                            $imageUrl = $image->url;
-                        }
-                    }
-        $request = new HttpRequest($imageUrl, $httpHeader = []);
-        $previewImage = $request->executeRESTCall("GET", null);
-        ///$previewImage = GeneralUtility::getUrl($response->images[0]->url);
-
-        }
-        if ($previewImage !== false) {
-            file_put_contents($temporaryFileName, $previewImage);
-            GeneralUtility::fixPermissions($temporaryFileName);
+        if ($images = $response[JsonParameters::IMAGES]) {
+            $imageUrl = $this->getThumbnail($images);
+            $previewImage = GeneralUtility::getUrl($imageUrl);
+            if ($previewImage !== false) {
+                file_put_contents($temporaryFileName, $previewImage);
+                GeneralUtility::fixPermissions($temporaryFileName);
+            }
         }
 
+        //$this->logger->info("imageUrl", array($imageUrl));
         return $temporaryFileName;
     }
-
-
 
 
     /**
@@ -121,7 +119,7 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
     public function getFileName($file)
     {
         $filename = explode("/", $file->getProperty('identifier'));
-        $filename = explode(".",  $filename[count($filename)-1]);
+        $filename = explode(".", $filename[count($filename) - 1]);
         return $filename[0];
     }
 
@@ -139,18 +137,19 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
         $apiKey = $this->getApiKey($siteId);
 
         $storageConfiguration = $file->getStorage()->getConfiguration();
-        //$apiKey = $storageConfiguration['apiKey'];
         $apiBaseURL = $storageConfiguration['apiBaseURL'];
-        ///Endpoint for listing a Video
-        $videosUrl = $apiBaseURL . "videos/" . $videoId;
-        $httpHeader = [
-            'Content-Type: application/json',
-            'x-flowplayer-api-key:' . $apiKey
-        ];
 
-        $request = new HttpRequest($videosUrl, $httpHeader);
-        $r = $request->executeRESTCall("GET", null);
-        return json_decode($r);
+        ///Endpoint for listing a Video
+        $path = "videos/" . $videoId;
+        $targetUrl = trim($apiBaseURL, '/') . "/" . trim($path, '/');
+        $additionalOptions = [
+            'headers' => [
+                'x-flowplayer-api-key' => $apiKey
+            ],
+        ];
+        /** @var ApiConnection */
+        $this->apiConnection = GeneralUtility::makeInstance(ApiConnection::class);
+        return $this->apiConnection->handle($targetUrl, "GET", $additionalOptions);
 
     }
 
@@ -163,5 +162,15 @@ class FlowplayerVideoHelper extends AbstractOEmbedHelper
     public function transformUrlToFile($url, Folder $targetFolder)
     {
         // TODO: Implement transformUrlToFile() method.
+    }
+
+    function getThumbnail($images)
+    {
+        foreach ($images as $image) {
+            if ($image['type'] == JsonParameters::IMAGE_TYPE_THUMBNAIL) {
+                return $image['url'];
+            }
+        }
+        return  $images['images'][0]['url'];
     }
 }

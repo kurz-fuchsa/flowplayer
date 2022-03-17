@@ -22,7 +22,6 @@ use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperInterface;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperRegistry;
 use TYPO3\CMS\Core\Resource\Rendering\FileRendererInterface;
-use KURZ\KurzFlowplayer\ViewHelpers\FlowplayerVideoHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -87,7 +86,7 @@ class FlowplayerVideoRenderer implements FileRendererInterface
      * @param bool $usedPathsRelativeToCurrentScript
      * @return string
      */
-    public function render(\TYPO3\CMS\Core\Resource\FileInterface $file, $width, $height, array $options = [], $usedPathsRelativeToCurrentScript = false)
+    public function render(FileInterface $file, $width, $height, array $options = [], $usedPathsRelativeToCurrentScript = false)
     {
 
         $videoId = $this->getFileName($file);
