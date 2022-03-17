@@ -3,6 +3,7 @@
 namespace KURZ\KurzFlowplayer\Controller;
 
 use KURZ\KurzFlowplayer\Lib\HTTP\HttpRequest;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
@@ -141,7 +142,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
                     $this->view->assign('videos', $videos);
                 }
             } else {
-                $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+                $this->extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('kurz_flowplayer');
                 $this->addFlashMessage(
                     'Please check your proxy settings in configuration options for this extension.',
                     'Proxy Setting is ' . $this->extConf['useProxy'],
@@ -240,7 +241,7 @@ class AdministrationController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
 
                 }
             } else {
-                $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+                $this->extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('kurz_flowplayer');
                 $this->addFlashMessage(
                     'Please check your proxy settings in configuration options for this extension.',
                     'Proxy Setting is ' . $this->extConf['useProxy'],

@@ -13,8 +13,10 @@ namespace KURZ\KurzFlowplayer\Driver;
  *
  ***/
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\Driver\LocalDriver;
 use TYPO3\CMS\Core\Resource\ResourceStorage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class FlowplayerDriver
@@ -46,7 +48,7 @@ class FlowplayerDriver extends LocalDriver
      */
     public function __construct(array $configuration = [])
     {
-        $this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+        $this->extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('kurz_flowplayer');
         parent::__construct($configuration);
 
         // The capabilities default of this driver. See CAPABILITY_* constants for possible values

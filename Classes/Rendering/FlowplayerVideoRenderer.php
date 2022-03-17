@@ -15,6 +15,7 @@ namespace KURZ\KurzFlowplayer\Rendering;
  ***/
 
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileInterface;
@@ -22,6 +23,7 @@ use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperInterface;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperRegistry;
 use TYPO3\CMS\Core\Resource\Rendering\FileRendererInterface;
 use KURZ\KurzFlowplayer\ViewHelpers\FlowplayerVideoHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class FlowplayerVideoRenderer
@@ -90,7 +92,7 @@ class FlowplayerVideoRenderer implements FileRendererInterface
 
         $videoId = $this->getFileName($file);
         $siteId = $file->getContents();
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['kurz_flowplayer']);
+        $this->extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('kurz_flowplayer');
         $propertiesOfFileReference = $file->getProperties();
         $parameters = '&';
 
