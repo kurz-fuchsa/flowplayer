@@ -2,6 +2,7 @@
 namespace KURZ\KurzFlowplayer\Controller;
 
 use KURZ\KurzFlowplayer\Domain\Repository\WorkspaceRepository;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Annotation\Inject;
 
 /***
@@ -97,7 +98,7 @@ class PlayerController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControlle
      * action edit
      *
      * @param \KURZ\KurzFlowplayer\Domain\Model\Player $player
-     * @ignorevalidation $player
+     * @IgnoreValidation $player
      * @return void
      */
     public function editAction(\KURZ\KurzFlowplayer\Domain\Model\Player $player)
