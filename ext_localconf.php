@@ -26,6 +26,13 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['FileInfo']['fileExtensionToMimeType']['flowp
 // Register flowplayer custom file extension as allowed media file
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['mediafile_ext'] .= ',flowplayer';
 
+// Register a node in ext_localconf.php
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']["1647533258"] = [
+    'nodeName' => 'fieldSelectedPlayer',
+    'priority' => 40,
+    'class' =>  \KURZ\KurzFlowplayer\Userfuncs\SelectedPlayerElement::class,
+];
+
 
 
 
