@@ -61,7 +61,10 @@ $tempColumns = [
         'label' => 'LLL:EXT:kurz_flowplayer/Resources/Private/Language/locallang.xlf:tx_kurzflowplayer_domain_model_player',
         'config' => [
             'type' => 'user',
-            'userFunc' => KURZ\KurzFlowplayer\Userfuncs\Tca::class . '->fieldSelectedPlayer',
+            'renderType' => 'fieldSelectedPlayer',
+            'parameters' => [
+                'useOpenStreetMap' => true,
+            ],
         ],
     ],
 
