@@ -15,14 +15,14 @@ namespace KURZ\KurzFlowplayer\Rendering;
  ***/
 
 
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperInterface;
 use TYPO3\CMS\Core\Resource\OnlineMedia\Helpers\OnlineMediaHelperRegistry;
 use TYPO3\CMS\Core\Resource\Rendering\FileRendererInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 
 /**
  * Class FlowplayerVideoRenderer
@@ -91,22 +91,23 @@ class FlowplayerVideoRenderer implements FileRendererInterface
 
         $videoId = $this->getFileName($file);
         $siteId = $file->getContents();
-        $this->extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('kurz_flowplayer');
+
+
         $propertiesOfFileReference = $file->getProperties();
         $parameters = '&';
 
         $attributes = [];
         if ($propertiesOfFileReference['autoplay']) {
             $attributes[] = ' allow="autoplay" ';
-            $parameters .='autoplay=true&';
+            $parameters .= 'autoplay=true&';
         }
         if ($propertiesOfFileReference['muted']) {
             $attributes[] = 'muted';
-            $parameters .='mute=true&';
+            $parameters .= 'mute=true&';
         }
         if ($propertiesOfFileReference['videoloop']) {
             $attributes[] = 'videoloop';
-            $parameters .='loop=true&';
+            $parameters .= 'loop=true&';
         }
         if ($propertiesOfFileReference['autopause']) {
             $attributes[] = 'autopause';
@@ -117,20 +118,28 @@ class FlowplayerVideoRenderer implements FileRendererInterface
         if ($propertiesOfFileReference['height']) {
             $attributes[] = 'height="' . (int)$propertiesOfFileReference['height'] . '"';
         }
-       // if ($propertiesOfFileReference['title']) {
-            $attributes[] = 'title="' . $options['title'] . '"';
-       // }
+        // if ($propertiesOfFileReference['title']) {
+        $attributes[] = 'title="' . $options['title'] . '"';
+        // }
+        $attributes[] = ' byline="0" portrait="0" frameborder="0" ';
 
         if ($propertiesOfFileReference['player']) {
-            $player = '//embed.flowplayer.com/api/video/embed.jsp?id='.$videoId.'&pi='.  $propertiesOfFileReference['player'];
-        }else{
-            $player =  '//ljsp.lwcdn.com/api/video/embed.jsp?id='. $videoId;
+            ///$player = '//embed.flowplayer.com/api/video/embed.jsp?id='.$videoId.'&pi='.  $propertiesOfFileReference['player'];
+            return '<div id="player" data-player-id="' . $propertiesOfFileReference['player'] . '">
+
+                      <script src="//cdn.flowplayer.com/players/' . $siteId . '/native/flowplayer.async.js">
+                          {
+                          "src": "' . $videoId . '"
+                          }
+                    </script>
+                   
+
+                </div>';
+        } else {
+            $player = '//ljsp.lwcdn.com/api/video/embed.jsp?id=' . $videoId;
         }
 
-        $attributes[] = ' byline="0" portrait="0" frameborder="0" ';
-            ///return '<div data-player-id="5c149835-639d-42b4-abb8-ab70a6372e2d"><script src="//cdn.flowplayer.com/players/'.$siteId.'/native/flowplayer.async.js">{"src": "'. $videoId.'"}</script></div>';
-
-        $iframe =  sprintf('<div %s><iframe %s src="%s" %s></iframe></div>',
+        $iframe = sprintf('<div %s><iframe %s src="%s" %s></iframe></div>',
             'class="flowplayer-embed-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;"',
             'style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" webkitAllowFullScreen mozallowfullscreen allowfullscreen ',
             $player,
@@ -138,12 +147,7 @@ class FlowplayerVideoRenderer implements FileRendererInterface
         );
 
         return $iframe;
-        $js = '<div class="flowplayer-embed-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width:100%;">
-<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" webkitAllowFullScreen mozallowfullscreen allowfullscreen 
-src="//ljsp.lwcdn.com/api/video/embed.jsp?id='. $videoId.'&pi=a29c6a42-b142-42fa-b7be-4e280e8020a5" 
-title="0" byline="0" portrait="0" width="640" height="360" frameborder="0" allow="autoplay"></iframe>
-</div>';
-        return $js;
+
     }
 
     /**

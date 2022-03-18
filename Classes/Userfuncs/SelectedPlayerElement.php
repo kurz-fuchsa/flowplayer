@@ -14,13 +14,14 @@ class SelectedPlayerElement extends AbstractFormElement
     {
         $parameterArray = $this->data['parameterArray'];
         $databaseRow = $this->data['databaseRow'];
+        $html = [];
         /** @var $logger \TYPO3\CMS\Core\Log\Logger */
         $this->logger = GeneralUtility::makeInstance(LogManager::class)
             ->getLogger(__CLASS__);
-        //$this->logger->info("databaseRow", array($databaseRow["uid_local"][0]["row"]));
+        ///$this->logger->info("databaseRow", array($databaseRow["uid_local"][0]["row"]["extension"]));
         if($databaseRow["uid_local"][0]["row"]["extension"] == 'flowplayer') {
             $players = $this->getPlayers();
-            $html = [];
+
             if (count($players) > 0) {
                 $html[] = '<select name="' . $parameterArray['itemFormElName'] . '" class="form-control form-control-adapt">';
                 $html[] = '<option value="0">--Please select the player--</option>';
@@ -29,11 +30,11 @@ class SelectedPlayerElement extends AbstractFormElement
                     $html[] = '<option ' . $selected . ' value="' . htmlspecialchars($player['player_id']) . '">' . $player['player_name'] . '-' . htmlspecialchars($player['player_id']) . '</option>';
                 }
                 $html[] .= ' </select>';
-                $resultArray['html'] = implode(LF, $html);
-
             }
+
        }
-        return $resultArray;
+        $resultArray['html'] = implode(LF, $html);
+        return  $resultArray;
     }
 
     /**
