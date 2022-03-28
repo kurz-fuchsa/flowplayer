@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:flowplayer="http://typo3.org/ns/KURZ/KurzFlowplayer/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <f:layout name="Default"/>
@@ -23,7 +24,7 @@
   <h1>
     <f:image src="EXT:kurz_flowplayer/Resources/Public/Icons/logo-blue.png" width="30"
              style="float:left; margin-right: 10px;"/>
-    <f:translate key="title"/>
+    <f:translate key="title"/> <flowplayer:GetExtensionVersion extensionKey="kurz_flowplayer" />
   </h1>
   <f:flashMessages/>
   <h2>
